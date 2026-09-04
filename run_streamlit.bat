@@ -1,3 +1,7 @@
 @echo off
-cd /d "C:\Users\Sk Akmam Uddin\OneDrive\Desktop\Landslide-AI"
-".venv\Scripts\python.exe" -m streamlit run app.py --server.port 8502
+cd /d "%~dp0"
+if exist ".venv\Scripts\python.exe" (
+	".venv\Scripts\python.exe" -m streamlit run app.py --server.port 8502
+) else (
+	python -m streamlit run app.py --server.port 8502
+)

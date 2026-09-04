@@ -31,51 +31,6 @@ with open("assets/styles.css") as f:
 render_user_menu()
 
 # =========================
-# SIDEBAR
-# =========================
-
-with st.sidebar:
-
-    st.markdown(
-    """
-    <div class="sidebar-title">
-    <span class="brand-mark">▲</span> Landslide AI
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
-
-    st.markdown(
-    """
-    <div class="sidebar-status">
-        <span class="status-dot"></span>
-        <div><strong>System Status</strong><b>Operational</b><small>All systems normal</small></div>
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
-
-    st.markdown("<div class='sidebar-section-label'>Recent conversations</div>", unsafe_allow_html=True)
-    messages = st.session_state.get("messages", [])
-    user_prompts = [message["content"] for message in messages if message["role"] == "user"]
-
-    if user_prompts:
-        for history_index, prompt in enumerate(reversed(user_prompts[-6:])):
-            history_title = prompt.strip().replace("\n", " ")
-            if len(history_title) > 30:
-                history_title = f"{history_title[:30]}..."
-            if st.button(history_title, key=f"sidebar_history_{history_index}", use_container_width=True):
-                st.switch_page("pages/7_AI_Assistant.py")
-    else:
-        st.markdown("<div class='sidebar-empty-history'>No conversations yet.<br>Ask the assistant about your location.</div>", unsafe_allow_html=True)
-
-    st.markdown("<div class='sidebar-profile-divider'></div>", unsafe_allow_html=True)
-    current_user = st.session_state.get("user")
-    profile_label = f"👤 {current_user['name']}" if current_user else "👤 Open profile"
-    if st.button(profile_label, key="sidebar_profile_button", use_container_width=True):
-        st.switch_page("pages/9_Profile.py")
-
-# =========================
 # HEADER
 # =========================
 
@@ -125,6 +80,10 @@ with col3:
         "Analyze Location",
         use_container_width=True
     )
+
+if analyze_clicked:
+    get_weather.clear()
+    get_terrain.clear()
 
 # =========================
 # WEATHER VALUES

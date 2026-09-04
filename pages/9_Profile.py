@@ -9,6 +9,7 @@ st.set_page_config(
 with open("assets/styles.css") as css_file:
     st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+
 st.markdown("<div class='profile-shell-anchor'></div>", unsafe_allow_html=True)
 st.markdown(
     """

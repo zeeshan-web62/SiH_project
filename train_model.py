@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 import joblib
+from pathlib import Path
 
 data = {
 
@@ -35,9 +36,8 @@ model = RandomForestClassifier(
 
 model.fit(X, y)
 
-joblib.dump(
-    model,
-    "models/landslide_model.pkl"
-)
+model_dir = Path(__file__).resolve().parent / "models"
+model_dir.mkdir(exist_ok=True)
+joblib.dump(model, model_dir / "landslide_model.pkl")
 
 print("Model Saved")

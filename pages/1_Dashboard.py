@@ -19,6 +19,7 @@ with open("assets/styles.css") as css_file:
 		unsafe_allow_html=True
 	)
 
+
 latitude, longitude = st.columns(2)
 
 with latitude:
@@ -36,6 +37,10 @@ with longitude:
 	)
 
 analyze_clicked = st.button("🔍 Analyze Location", use_container_width=True)
+
+if analyze_clicked:
+	get_weather.clear()
+	get_terrain.clear()
 
 st.session_state["latitude"] = selected_latitude
 st.session_state["longitude"] = selected_longitude

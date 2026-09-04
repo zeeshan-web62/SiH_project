@@ -11,6 +11,7 @@ st.set_page_config(page_title="Landslide AI Alerts", page_icon="🚨", layout="w
 with open("assets/styles.css") as css_file:
 	st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+
 st.markdown("<div class='alerts-shell-anchor'></div>", unsafe_allow_html=True)
 st.markdown(
 	"""

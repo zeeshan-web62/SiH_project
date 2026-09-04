@@ -7,6 +7,7 @@ st.set_page_config(page_title="Landslide AI Settings", page_icon="⚙️", layou
 with open("assets/styles.css") as css_file:
 	st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+
 st.markdown("<div class='settings-shell-anchor'></div>", unsafe_allow_html=True)
 st.markdown(
 	"""

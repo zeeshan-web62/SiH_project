@@ -10,6 +10,7 @@ st.set_page_config(
 with open("assets/styles.css") as css_file:
 	st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+
 st.markdown("<div class='weather-shell-anchor'></div>", unsafe_allow_html=True)
 st.markdown(
 	"""
@@ -46,7 +47,10 @@ with location_column:
 with action_column:
 	st.write("")
 	st.write("")
-	st.button("Refresh Weather", use_container_width=True)
+	refresh_weather = st.button("Refresh Weather", use_container_width=True)
+
+if refresh_weather:
+	get_weather.clear()
 
 st.session_state["latitude"] = selected_latitude
 st.session_state["longitude"] = selected_longitude

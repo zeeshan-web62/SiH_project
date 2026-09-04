@@ -1,6 +1,8 @@
 import requests
+import streamlit as st
 
 
+@st.cache_data(ttl=300, show_spinner=False)
 def get_weather(latitude, longitude):
 
     url = (
@@ -12,7 +14,8 @@ def get_weather(latitude, longitude):
 
     try:
 
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=(3, 6))
+        response.raise_for_status()
 
         data = response.json()
 

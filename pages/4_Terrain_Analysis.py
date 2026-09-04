@@ -12,6 +12,7 @@ st.set_page_config(
 with open("assets/styles.css") as css_file:
 	st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+
 st.markdown("<div class='terrain-shell-anchor'></div>", unsafe_allow_html=True)
 st.markdown(
 	"""
@@ -48,7 +49,10 @@ with location_column:
 with action_column:
 	st.write("")
 	st.write("")
-	st.button("Refresh Terrain", use_container_width=True)
+	refresh_terrain = st.button("Refresh Terrain", use_container_width=True)
+
+if refresh_terrain:
+	get_terrain.clear()
 
 st.session_state["latitude"] = selected_latitude
 st.session_state["longitude"] = selected_longitude

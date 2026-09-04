@@ -12,6 +12,7 @@ st.set_page_config(page_title="Landslide Risk Map", page_icon="🗺️", layout=
 with open("assets/styles.css") as css_file:
 	st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+
 user = require_login()
 latitude = st.session_state.get("latitude", 24.5)
 longitude = st.session_state.get("longitude", 93.5)
