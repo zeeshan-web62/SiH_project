@@ -9,3 +9,6 @@ __pycache__/
 *.pt
 *.pth
 *.h5
+
+# The deployed app loads this trained model at startup.
+!models/landslide_model.pkl
