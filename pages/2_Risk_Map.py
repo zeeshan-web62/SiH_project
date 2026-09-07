@@ -59,60 +59,56 @@ with map_column:
 
 	if risk_score is None:
 		circle_color = "gray"
-        fill_color = "gray"
+		fill_color = "gray"
+	elif risk_score < 30:
+		circle_color = "green"
+		fill_color = "green"
+	elif risk_score < 70:
+		circle_color = "orange"
+		fill_color = "orange"
+	else:
+		circle_color = "red"
+		fill_color = "red"
 
-    elif risk_score < 30:
-        circle_color = "green"
-        fill_color = "green"
-
-    elif risk_score < 70:
-        circle_color = "orange"
-        fill_color = "orange"
-
-    else:
-        circle_color = "red"
-        fill_color = "red"
-	
 	folium.Circle(
-    [latitude, longitude],
-    radius=5000,
-    color=circle_color,
-    fill=True,
-    fill_color=fill_color,
-    fill_opacity=0.30
-    ).add_to(risk_map)
-	
-	folium.Marker(
-    [latitude, longitude],
-    tooltip=f"{user['name']}'s selected place",
-    popup=f"{latitude:.4f}, {longitude:.4f} | {risk_level}",
-    icon=folium.Icon(
-        color=(
-            "green"
-            if risk_score is not None and risk_score < 30
-            else "orange"
-            if risk_score is not None and risk_score < 70
-            else "red"
-		)
-	)
+		[latitude, longitude],
+		radius=5000,
+		color=circle_color,
+		fill=True,
+		fill_color=fill_color,
+		fill_opacity=0.30
 	).add_to(risk_map)
-	
+
+	folium.Marker(
+		[latitude, longitude],
+		tooltip=f"{user['name']}'s selected place",
+		popup=f"{latitude:.4f}, {longitude:.4f} | {risk_level}",
+		icon=folium.Icon(
+			color=(
+				"green"
+				if risk_score is not None and risk_score < 30
+				else "orange"
+				if risk_score is not None and risk_score < 70
+				else "red"
+			)
+		)
+	).add_to(risk_map)
+
 	folium.LayerControl().add_to(risk_map)
-		
+
 	map_data = st_folium(
 		risk_map,
-        width=None,
-        height=560
+		width=None,
+		height=560
 	)
 	if map_data and map_data.get("last_clicked"):
+		clicked_lat = map_data["last_clicked"]["lat"]
+		clicked_lon = map_data["last_clicked"]["lng"]
 
-        clicked_lat = map_data["last_clicked"]["lat"]
-        clicked_lon = map_data["last_clicked"]["lng"]
+		st.session_state["latitude"] = clicked_lat
+		st.session_state["longitude"] = clicked_lon
 
-        st.session_state["latitude"] = clicked_lat
-        st.session_state["longitude"] = clicked_lon
-
-        st.rerun()
+		st.rerun()
 
 with insight_column:
 	st.subheader("Place profile")
