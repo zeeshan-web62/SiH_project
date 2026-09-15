@@ -133,8 +133,9 @@ with factor_columns[0]:
 with factor_columns[1]:
 	st.markdown("**Terrain profile**")
 	st.write(f"Elevation: {terrain['elevation']} m" if terrain else "Unavailable")
-	st.write("Elevation is used as a model feature.")
-	st.write("Slope and soil data are not currently available.")
+	st.write(f"Slope: {terrain['slope']:.1f}°" if terrain else "Unavailable")
+	st.write("Elevation and slope are used as model features.")
+	st.write("Soil composition data is not currently available.")
 
 with factor_columns[2]:
 	st.markdown("**Recommended action**")

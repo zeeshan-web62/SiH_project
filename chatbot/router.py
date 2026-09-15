@@ -19,10 +19,19 @@ def route_query(user_query):
 
     # Risk Questions
 
-    elif any(word in query for word in [
+    elif any(phrase in query for phrase in [
+        "risk score",
+        "risk level",
+        "landslide risk",
         "risk",
         "landslide",
-        "prediction"
+        "prediction",
+        "susceptibility",
+        "calculate risk",
+        "predict risk",
+        "risk prediction",
+        "current risk",
+        "how risky"
     ]):
 
         return {

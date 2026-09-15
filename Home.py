@@ -142,9 +142,7 @@ st.subheader("🗺️ Terrain Map")
 
 terrain_map = folium.Map(
     location=[latitude, longitude],
-    zoom_start=10,
-    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attr="Esri World Imagery"
+    zoom_start=10
 )
 
 folium.Marker(

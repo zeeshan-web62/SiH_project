@@ -1,29 +1,19 @@
-import requests
 import streamlit as st
+from online_terrain import get_online_terrain
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def get_terrain(latitude, longitude):
-
-    url = (
-        "https://api.open-meteo.com/v1/elevation"
-        f"?latitude={latitude}"
-        f"&longitude={longitude}"
-    )
-
     try:
-
-        response = requests.get(url, timeout=(3, 6))
-        response.raise_for_status()
-
-        data = response.json()
-
-        elevation = data["elevation"][0]
+        elevation, slope = get_online_terrain(
+            latitude,
+            longitude
+        )
 
         return {
-            "elevation": elevation
+            "elevation": elevation,
+            "slope": slope
         }
 
     except Exception:
-
         return None

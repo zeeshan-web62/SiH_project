@@ -1,11 +1,36 @@
-.env
+# Python
+venv/
 .venv/
 __pycache__/
-*.log
 *.py[cod]
+*.pyo
+*.log
+
+# VS Code
+.vscode/
+
+# Secrets
+.env
+*.env
 .streamlit/secrets.toml
+
+# DEM files
+*.tif
+*.tiff
+*.tar
+*.tar.gz
+*.zip
+
+# Large/raw project files
+data/*.pdf
 *.joblib
 *.pkl
 *.pt
 *.pth
 *.h5
+
+# Generated data
+data/*.csv
+
+# Generated maps
+data/*.html

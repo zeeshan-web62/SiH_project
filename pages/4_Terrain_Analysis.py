@@ -21,7 +21,7 @@ st.markdown(
 		<div>
 			<div class="assistant-kicker">LANDSLIDE INTELLIGENCE</div>
 			<h1>Terrain analysis</h1>
-			<p>Elevation intelligence for understanding the selected location.</p>
+			<p>Elevation and slope intelligence for understanding the selected location.</p>
 		</div>
 	</div>
 	""",
@@ -59,14 +59,16 @@ st.session_state["longitude"] = selected_longitude
 terrain = get_terrain(selected_latitude, selected_longitude)
 
 elevation = terrain["elevation"] if terrain else None
+slope = terrain["slope"] if terrain else None
 elevation_label = f"{elevation:.1f} m" if elevation is not None else "N/A"
-data_status = "Live elevation available" if terrain else "Terrain service unavailable"
+slope_label = f"{slope:.1f}°" if slope is not None else "N/A"
+data_status = "Live terrain data available" if terrain else "Terrain service unavailable"
 
 st.markdown("<div class='section-kicker'>02 <span>Terrain Metrics</span></div>", unsafe_allow_html=True)
 metric_columns = st.columns(3)
 metrics = [
 	("⛰️", "Elevation", elevation_label, "Above mean sea level"),
-	("⌖", "Coordinates", f"{selected_latitude:.4f}, {selected_longitude:.4f}", "Current analysis point"),
+	("📐", "Slope", slope_label, "Steepness of terrain"),
 	("◌", "Data status", data_status, "Source availability"),
 ]
 
@@ -91,9 +93,9 @@ with assessment_column:
 	st.markdown(
 		f"""
 		<div class='card terrain-note'>
-			<div class='card-kicker'>Elevation profile</div>
+			<div class='card-kicker'>Elevation & slope profile</div>
 			<h2>{data_status}</h2>
-			<p>Elevation is available as a terrain feature for the selected point. Combine this reading with rainfall, slope and local observations when assessing landslide conditions.</p>
+			<p>Elevation and slope are both available as terrain features for the selected point. Combine these readings with rainfall and local observations when assessing landslide conditions.</p>
 		</div>
 		""",
 		unsafe_allow_html=True
@@ -101,6 +103,6 @@ with assessment_column:
 
 with limitation_column:
 	if terrain:
-		st.info("Slope, aspect and soil composition are not currently available from the terrain service.")
+		st.info("Aspect and soil composition are not currently available from the terrain service.")
 	else:
 		st.warning("Terrain data could not be loaded. Check the location and try again.")
