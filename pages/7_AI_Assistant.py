@@ -75,6 +75,7 @@ Always prioritize public safety, factual accuracy, and clear communication.
 
 import streamlit as st
 
+from chatbot.gemini_client import ask_gemini
 from chatbot.mistral_client import ask_mistral
 
 from chatbot.router import route_query
@@ -246,30 +247,28 @@ if prompt:
             prompt
         )
     # ---------------------
-    # MISTRAL
+    # GEMINI with Mistral fallback
     # ---------------------
 
     else:
 
-        mistral_messages = [
-            {
-                "role":"system",
-                "content": SYSTEM_PROMPT
-            }
-        ]
-
-        for msg in st.session_state.messages:
-
-            mistral_messages.append(
-                {
-                    "role": msg["role"],
-                    "content": msg["content"]
-                }
-            )
-
-        response = ask_mistral(
-            mistral_messages
+        conversation = "\n".join(
+            f"{msg['role']}: {msg['content']}"
+            for msg in st.session_state.messages
         )
+        response = ask_gemini(
+            f"{SYSTEM_PROMPT}\n\nConversation:\n{conversation}"
+        )
+
+        if response.startswith(("Gemini is unavailable", "Gemini API Error")):
+            mistral_messages = [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                *[
+                    {"role": msg["role"], "content": msg["content"]}
+                    for msg in st.session_state.messages
+                ],
+            ]
+            response = ask_mistral(mistral_messages)
 
     # ---------------------
     # SHOW RESPONSE
